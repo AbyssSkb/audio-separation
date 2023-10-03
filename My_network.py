@@ -47,28 +47,28 @@ class Unet(nn.Module):
     def __init__(self, in_channel : int, out_channel : int):
         super(Unet, self).__init__()
         #Down
-        self.down1 = Down(in_channel, 8)
-        self.down2 = Down(8, 16)
-        self.down3 = Down(16, 32)
-        self.down4 = Down(32, 64)
+        self.down1 = Down(in_channel, 64)
+        self.down2 = Down(64, 128)
+        self.down3 = Down(128, 256)
+        self.down4 = Down(256, 512)
 
         self.conv_relu1 = nn.Sequential(
-            nn.Conv1d(64, 128, 3, 1, 1),
+            nn.Conv1d(512, 1024, 3, 1, 1),
             nn.ReLU()
         )
         self.conv_relu2 = nn.Sequential(
-            nn.Conv1d(128, 128, 3, 1, 1),
+            nn.Conv1d(1024, 1024, 3, 1, 1),
             nn.ReLU()
         )
 
         #Up
-        self.up4 = Up(128, 64)
-        self.up3 = Up(64, 32)
-        self.up2 = Up(32, 16)
-        self.up1 = Up(16, 8)
+        self.up4 = Up(1024, 512)
+        self.up3 = Up(512, 256)
+        self.up2 = Up(256, 128)
+        self.up1 = Up(128, 64)
 
         self.conv = nn.Sequential(
-            nn.Conv1d(8, out_channel, 3, 1, 1),
+            nn.Conv1d(64, out_channel, 3, 1, 1),
             nn.Tanh()
         )
 

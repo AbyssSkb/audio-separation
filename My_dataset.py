@@ -3,9 +3,9 @@ import torchaudio
 import torch
 import os
 
-class My_Dataset(Dataset):
+class trainDataset(Dataset):
     def __len__(self):
-        return 35
+        return 1225
     
     def __getitem__(self, index):
         audio_merge, sample_rate = torchaudio.load(os.path.join('Marge', 'Marge-' + str(index + 1) + '.wav'))
@@ -17,17 +17,17 @@ class My_Dataset(Dataset):
         audio2 = transform(audio2)[:, : 4*16000]
         return audio_merge, torch.cat((audio1, audio2), dim=0)
     
-class My_Dataset2(Dataset):
+class My_Dataset(Dataset):
     def __len__(self):
-        return 35
+        return 1225
     
     def __getitem__(self, index):
-        audio_merge, sample_rate = torchaudio.load(os.path.join('Merge', 'marge-' + str(index + 1) + '.wav'))
-        audio1, _ = torchaudio.load(os.path.join('Swire', 'Swire-' + str(index + 1) + '.wav'))
-        audio2, _ = torchaudio.load(os.path.join('Ejafjalla', 'Ejafjalla-' + str(index + 1) + '.wav'))
+        audio_merge, sample_rate = torchaudio.load(os.path.join('C:\\Users\\Abyss\\Music\\Merge', 'Merge-' + str(index + 1) + '.wav'))
+        audio1, _ = torchaudio.load(os.path.join('C:\\Users\\Abyss\\Music\\1_Split', '1_Split-' + str(index + 1) + '.wav'))
+        audio2, _ = torchaudio.load(os.path.join('C:\\Users\\Abyss\\Music\\2_Split', '2_Split-' + str(index + 1) + '.wav'))
         transform = torchaudio.transforms.Resample(sample_rate, 16000)
-        audio_merge = transform(audio_merge)[:, : 2*16000]
-        audio1 = transform(audio1)[:, : 2*16000]
-        audio2 = transform(audio2)[:, : 2*16000]
+        audio_merge = transform(audio_merge)[:, : 4*16000]
+        audio1 = transform(audio1)[:, : 4*16000]
+        audio2 = transform(audio2)[:, : 4*16000]
         return audio_merge, torch.cat((audio1, audio2), dim=0)
     

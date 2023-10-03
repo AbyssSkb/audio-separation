@@ -18,9 +18,9 @@ def test():
         audio_merge = audio_merge.cuda()
         output = model(audio_merge).cpu().detach()
         audio_merge = audio_merge.cpu().detach()
-        torchaudio.save(os.path.join('Test', 'spilt-' + str(i) + '_1.wav'), output[:, 0, :], 16000)
-        torchaudio.save(os.path.join('Test', 'spilt-' + str(i) + '_2.wav'), output[:, 1, :], 16000)
-        torchaudio.save(os.path.join('Test', 'merge-' + str(i) + '.wav'), audio_merge[0, :, :], 16000)
+        torchaudio.save(os.path.join('C:\\Users\\Abyss\\Music\Test', 'spilt-' + str(i) + '_1.wav'), output[:, 0, :], 16000)
+        torchaudio.save(os.path.join('C:\\Users\\Abyss\\Music\Test', 'spilt-' + str(i) + '_2.wav'), output[:, 1, :], 16000)
+        torchaudio.save(os.path.join('C:\\Users\\Abyss\\Music\Test', 'merge-' + str(i) + '.wav'), audio_merge[0, :, :], 16000)
         i += 1
 
 if __name__ == '__main__':
