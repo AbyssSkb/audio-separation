@@ -5,8 +5,8 @@ import torch.nn as nn
 import torch
 
 Epoch = 100
-Batch_size = 5
-LR = 0.0001
+Batch_size = 10
+LR = 0.0003
 
 train_loader = DataLoader(dataset=trainDataset(), batch_size=Batch_size, shuffle=True)
 
