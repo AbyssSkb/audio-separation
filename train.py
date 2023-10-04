@@ -1,4 +1,4 @@
-from My_dataset import My_Dataset
+from My_dataset import trainDataset
 from torch.utils.data import DataLoader
 from My_network import Unet
 import torch.nn as nn
@@ -6,16 +6,16 @@ import torch
 
 Epoch = 100
 Batch_size = 5
-LR = 0.0003
+LR = 0.00003
 
-train_loader = DataLoader(dataset=My_Dataset(), batch_size=Batch_size, shuffle=True)
+train_loader = DataLoader(dataset=trainDataset(), batch_size=Batch_size, shuffle=True)
 
 def main():
-    unet = Unet(in_channel=1, out_channel=2)
-    unet.load_state_dict(torch.load("model.pt"))
+    model = Unet(in_channel=1, out_channel=2)
+    model.load_state_dict(torch.load("model.pt"))
     loss_function = nn.MSELoss()
-    optimizer = torch.optim.Adam(unet.parameters(), lr=LR)
-    unet = unet.cuda()
+    optimizer = torch.optim.Adam(model.parameters(), lr=LR)
+    model = model.cuda()
     loss_function = loss_function.cuda()
 
     for epoch in range(Epoch):
@@ -24,13 +24,13 @@ def main():
             audio_merge = audio_merge.cuda()
             audio_spilt = audio_spilt.cuda()
             optimizer.zero_grad()
-            output = unet(audio_merge)
+            output = model(audio_merge)
             loss = loss_function(output, audio_spilt)
             loss.backward()
             optimizer.step()
-            print('Train Loss: ', loss)
+            print('Train Loss: %.1e' %loss.item())
 
-        torch.save(unet.state_dict(), "model.pt")
+        torch.save(model.state_dict(), "model.pt")
 
 if __name__ == '__main__':
     main()
