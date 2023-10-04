@@ -8,11 +8,13 @@ class Down(nn.Module):
         super(Down, self).__init__()
         self.conv_relu1 = nn.Sequential(
             nn.Conv1d(in_channel, out_channel, 3, 1, 1),
-            nn.ReLU()
+            nn.BatchNorm1d(out_channel),
+            nn.LeakyReLU()
         )
         self.conv_relu2 = nn.Sequential(
             nn.Conv1d(out_channel, out_channel, 3, 1, 1),
-            nn.ReLU()
+            nn.BatchNorm1d(out_channel),
+            nn.LeakyReLU()
         )
         self.pool = nn.MaxPool1d(2)
 
@@ -28,11 +30,13 @@ class Up(nn.Module):
         self.up = nn.ConvTranspose1d(in_channel, out_channel, 2, 2)
         self.conv_relu1 = nn.Sequential(
             nn.Conv1d(in_channel, out_channel, 3, 1, 1),
-            nn.ReLU()
+            nn.BatchNorm1d(out_channel),
+            nn.LeakyReLU()
         )
         self.conv_relu2 = nn.Sequential(
             nn.Conv1d(out_channel, out_channel, 3, 1, 1),
-            nn.ReLU()
+            nn.BatchNorm1d(out_channel),
+            nn.LeakyReLU()
         )
     
     def forward(self, x, res):
@@ -54,11 +58,13 @@ class Unet(nn.Module):
 
         self.conv_relu1 = nn.Sequential(
             nn.Conv1d(512, 1024, 3, 1, 1),
-            nn.ReLU()
+            nn.BatchNorm1d(1024),
+            nn.LeakyReLU()
         )
         self.conv_relu2 = nn.Sequential(
             nn.Conv1d(1024, 1024, 3, 1, 1),
-            nn.ReLU()
+            nn.BatchNorm1d(1024),
+            nn.LeakyReLU()
         )
 
         #Up
