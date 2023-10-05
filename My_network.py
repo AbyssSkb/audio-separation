@@ -42,6 +42,27 @@ class Up(nn.Module):
         x = self.conv_relu2(x)
         return x
 
+class CNN(nn.Module):
+    def __init__(self, in_channel : int, out_features : int):
+        super(CNN, self).__init__()
+
+        self.down1 = Down(in_channel, 64)
+        self.down2 = Down(64, 128)
+        self.down3 = Down(128, 256)
+        self.down4 = Down(256, 512)
+
+        self.linear = nn.Sequential(
+            nn.Conv1d(512, out_features, 4000),
+            nn.Sigmoid()
+        )
+
+    def forward(self, x):
+        x, _ = self.down1(x)
+        x, _ = self.down2(x)
+        x, _ = self.down3(x)
+        x, _ = self.down4(x)
+        x = self.linear(x)
+        return x
 
 class Unet(nn.Module):
     def __init__(self, in_channel : int, out_channel : int):

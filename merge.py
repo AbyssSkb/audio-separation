@@ -9,7 +9,7 @@ audio_folders = ["samples/1", "samples/2", "samples/3", "samples/4", "samples/5"
 
 num_files = 10000
 
-labels = torch.zeros(num_files, 5, dtype=torch.int)
+labels = torch.zeros(num_files, 5, dtype=torch.float)
 
 for i in range(num_files):
     num_voices = random.randint(1, 5)
